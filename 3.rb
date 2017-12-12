@@ -1,6 +1,5 @@
 require "minitest/autorun"
 require "minitest/pride"
-require "decoratable/memoizable"
 
 class Integer
   # Strategy:
@@ -163,6 +162,3 @@ describe "Spiral Memory" do
     end
   end
 end
-
-require "irb"
-IRB.start
