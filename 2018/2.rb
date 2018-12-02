@@ -35,6 +35,26 @@ def find_similar(boxes)
   answer
 end
 
+def find_similar_hashes(boxes)
+  hashes = Hash.new { 0 }
+
+  boxes.each do |box|
+    chars = box.chars
+    chars.each_with_index do |_, index|
+      if index == 0
+        key = chars[1..-1]
+      elsif index == chars.size - 1
+        key = chars[0..-2]
+      else
+        key = chars[0..index - 1] + chars[index + 1..-1]
+      end
+      hashes[key] += 1
+
+      return key.join if hashes[key] == 2
+    end
+  end
+end
+
 describe "Inventory Management System" do
   it "can generate a checksum" do
     examples = [
@@ -62,9 +82,7 @@ describe "Inventory Management System" do
 
     examples.each do |example, answer|
       assert_equal answer, find_similar(example)
+      assert_equal answer, find_similar_hashes(example)
     end
   end
 end
-
-require "irb"
-IRB.start
