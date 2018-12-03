@@ -37,16 +37,12 @@ class Claim
     grid = Hash.new { 0 }
 
     claims.each { |claim| claim.cells.each { |cell| grid[cell] += 1 } }
-    puts grid.inspect
-    claims.each { |claim| puts claim.cells.inspect }
     grid.count { |cell, value| value > 1 }
   end
 
   def self.non_overlapping_claim(claims)
     claims.find do |claim|
       remaining_claims = claims - [claim]
-      puts "Checking against #{remaining_claims.size} claims."
-      puts "Confirming: claim is in remaining_claims: #{remaining_claims.include?(claim)}"
       remaining_claims.none? { |other_claim| claim.overlap?(other_claim) }
     end
   end
